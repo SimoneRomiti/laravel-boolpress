@@ -8,18 +8,35 @@
 	<title>Document</title>
 </head>
 <body>
-	<ul class="text-center">
 	
-		@foreach ($posts as $post)
-			<li class="my-5">
-				<h1>{{ $post->title }}</h1>
-				<p>{{ $post->text }}</p>
-				<p>- {{ $post->author }}</p>
-				<p><strong>Post Status</strong>  - {{ $post->info->post_status }}</p>
-				<p><strong>Comment Status</strong> - {{ $post->info->comment_status }}</p>
+	<div class="container my-5">
+		<table class="table table-dark table-striped tabel-bordered">
+			<thead>
+				<th>TITOLO</th>
+				<th>TESTO</th>
+				<th>AUTORE</th>
+				<th>POST STATUS</th>
+				<th>COMMENT STATUS</th>
+				<th>PUBBLICATO IL</th>
+				<th>Autore Primo Commento:</th>
+			</thead>
 
-			</li>
-		@endforeach
-	</ul>
+			<tbody>
+				@foreach ($posts as $post)
+					<tr>
+						<td>{{ $post->title }}</td>
+						<td>{{ substr($post->text, 0, 200). "..." }}</td>
+						<td>{{ $post->author }}</td>
+						<td>{{ $post->info->post_status }}</td>
+						<td>{{ $post->info->comment_status }}</td>
+						<td>{{ $post->published_at }}</td>
+						<td>{{ $post->comments[0]->author }}</td>
+						<td><a href="{{ route('posts.show', $post->id) }}">Dettaglio</a></td>
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
+	</div>
+	
 </body>
 </html>
