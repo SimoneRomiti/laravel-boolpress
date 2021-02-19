@@ -24,10 +24,12 @@
 						<td>{{ $post->published_at }}</td>
 						<td>{{ $post->comments[0]->author }}</td>
 						<td><a href="{{ route('detail', $post->slug) }}">Dettaglio</a></td>
+						<td><a href="{{ route('edit', $post->slug) }}">Modifica</a></td>
 					</tr>
 				@endforeach
 			</tbody>
 		</table>
+		<a class="btn btn-primary" href="{{ route('create') }}">Crea</a>
 	</div>
 @endsection
 	

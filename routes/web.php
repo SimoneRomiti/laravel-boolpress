@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 // Route::resource('posts', 'PostController');
 Route::get('posts', 'PostController@index')->name('post');
+Route::post('posts/store', 'PostController@store')->name('store');
+Route::put('posts/update/{slug}', 'PostController@update')->name('update');
+Route::get('posts/create', 'PostController@create')->name('create');
+Route::get('posts/edit/{slug}', 'PostController@edit')->name('edit');
 Route::get('posts/{slug}', 'PostController@show')->name('detail');
 Route::post('posts/{id}/comment', 'CommentController@newComment')->name('newComment');
 

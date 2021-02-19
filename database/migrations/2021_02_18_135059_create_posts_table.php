@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('title', 100);
             $table->string('slug', 100);
-            $table->text('img');
+            $table->text('img')->nullable();
             $table->text('text');
             $table->string('author', 60);
             $table->dateTime('published_at');
