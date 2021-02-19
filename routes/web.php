@@ -13,5 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('posts', 'PostController');
+// Route::resource('posts', 'PostController');
+Route::get('posts', 'PostController@index')->name('post');
+Route::get('posts/{slug}', 'PostController@show')->name('detail');
+Route::post('posts/{id}/comment', 'CommentController@newComment')->name('newComment');
 
