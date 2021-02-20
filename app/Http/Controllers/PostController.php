@@ -48,7 +48,8 @@ class PostController extends Controller
         $infoPost->post_id = $post->id;
         $infoPost->save();
 
-        return redirect()->route('detail', $post->slug);
+        return redirect()->route('detail', $post->slug)
+            ->with('message', 'il post dal titolo "'.$post->title.'" è stato creato correttamente');
 
     }
 
@@ -59,6 +60,7 @@ class PostController extends Controller
 
     public function update(Request $request, $slug){
         // dd($request->all());
+        $request->validate($this->validation);
         $data = $request->all();
         $post = Post::where('slug', $slug)->first();
         $post->fill($data);
@@ -70,6 +72,15 @@ class PostController extends Controller
         $infoPost->save();
         // dd($infoPost);
         
-        return redirect()->route('detail', $slug);
+        return redirect()->route('detail', $slug)
+            ->with('message', 'il post dal titolo "'.$post->title.'" è stato modificato correttamente');
+    }
+
+    public function delete($id){
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect()->route('post')
+            ->with('message', 'Il post dal titolo "'.$post->title.'" è stato eliminato correttamente');
     }
 }

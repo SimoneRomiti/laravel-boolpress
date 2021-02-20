@@ -20,5 +20,6 @@ Route::put('posts/update/{slug}', 'PostController@update')->name('update');
 Route::get('posts/create', 'PostController@create')->name('create');
 Route::get('posts/edit/{slug}', 'PostController@edit')->name('edit');
 Route::get('posts/{slug}', 'PostController@show')->name('detail');
+Route::delete('posts/delete/{id}', 'PostController@delete')->name('delete');
 Route::post('posts/{id}/comment', 'CommentController@newComment')->name('newComment');
 

@@ -2,6 +2,11 @@
 
 @section('main')
 	<div class="container my-5">
+		@if (session('message'))
+			<div class="alert alert-success">
+					{{ session('message') }}
+			</div>
+		@endif
 		<table class="table table-dark table-striped tabel-bordered">
 			<thead>
 				<th>TITOLO</th>
@@ -25,6 +30,13 @@
 						<td>{{ $post->comments[0]->author }}</td>
 						<td><a href="{{ route('detail', $post->slug) }}">Dettaglio</a></td>
 						<td><a href="{{ route('edit', $post->slug) }}">Modifica</a></td>
+						<td>
+							<form action="{{ route('delete', $post->id) }}" method="post">
+								@csrf
+								@method('DELETE')
+								<button type="submit">Elimina</button>
+							</form>
+						</td>
 					</tr>
 				@endforeach
 			</tbody>

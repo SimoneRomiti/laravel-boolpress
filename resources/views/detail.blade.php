@@ -2,6 +2,11 @@
 
 @section('main')
 	<div class="container bg-dark text-white py-2">
+		@if (session('message'))
+			<div class="alert alert-success">
+					{{ session('message') }}
+			</div>
+		@endif
 		<ul>	
 			<li class="my-5 list-unstyled">
 				<h1 class="text-center">{{ $post->title }}</h1>
