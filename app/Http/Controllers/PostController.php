@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\InfoPost;
+use App\Tag;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -17,6 +18,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        // dd($posts);
         return view('post', ['posts' => $posts]);
     }
 
@@ -28,6 +30,7 @@ class PostController extends Controller
     }
 
     public function create(){
+        // $tags = Tag::all();
         return view('create_post');
     }
 
@@ -48,7 +51,9 @@ class PostController extends Controller
         $infoPost->post_id = $post->id;
         $infoPost->save();
 
-        return redirect()->route('detail', $post->slug)
+        // $post->tags()->attach($data['tags']);
+
+        return redirect()->route('post')
             ->with('message', 'il post dal titolo "'.$post->title.'" è stato creato correttamente');
 
     }

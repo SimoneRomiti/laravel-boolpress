@@ -54,6 +54,7 @@
 
 			<button class="btn btn-primary" type="submit">INVIA</button>
 		</form>
+		<a href="{{ route('post') }}">INDIETRO</a>
 	</div>
 @endsection
 	
