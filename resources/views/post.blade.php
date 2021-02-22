@@ -7,6 +7,12 @@
 					{{ session('message') }}
 			</div>
 		@endif
+
+		@if (session('messageError'))
+			<div class="alert alert-danger">
+					{{ session('messageError') }}
+			</div>
+		@endif
 		<table class="table table-dark table-striped tabel-bordered">
 			<thead>
 				<th>TITOLO</th>
@@ -15,7 +21,6 @@
 				<th>POST STATUS</th>
 				<th>COMMENT STATUS</th>
 				<th>PUBBLICATO IL</th>
-				<th>Autore Primo Commento:</th>
 			</thead>
 
 			<tbody>
@@ -27,11 +32,10 @@
 						<td>{{ $post->info->post_status }}</td>
 						<td>{{ $post->info->comment_status }}</td>
 						<td>{{ $post->published_at }}</td>
-						<td>{{ $post->comments[0]->author }}</td>
 						<td><a href="{{ route('detail', $post->slug) }}">Dettaglio</a></td>
 						<td><a href="{{ route('edit', $post->slug) }}">Modifica</a></td>
 						<td>
-							<form action="{{ route('delete', $post->id) }}" method="post">
+							<form action="{{ route('delete', $post->id) }}" method="post" onsubmit="return confirm('Sei sicuro?')">
 								@csrf
 								@method('DELETE')
 								<button type="submit">Elimina</button>

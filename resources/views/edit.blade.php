@@ -54,6 +54,16 @@
 				</select>
 			</div>
 
+			<div class="form-group">
+				<label for="comment_status">TAGS</label>
+				@foreach ($tags as $tag)
+					<div class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="{{ $tag->name }}" name="tags[]" value="{{ $tag->id }}" {{ $post->tags->contains($tag) ? 'checked' : '' }}>
+						<label class="custom-control-label" for="{{ $tag->name }}">{{ $tag->name }}</label>
+					</div>
+				@endforeach
+			</div>
+
 			<button class="btn btn-primary" type="submit">Modifica</button>
 		</form>
 	</div>

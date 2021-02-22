@@ -54,15 +54,15 @@
 				</select>
 			</div>
 
-			{{-- <div class="form-group">
+			<div class="form-group">
 				<label for="comment_status">TAGS</label>
 				@foreach ($tags as $tag)
 					<div class="custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input" id="{{ $tag->name }}" name="tags[]" value="{{ $tag->name }}">
+						<input type="checkbox" class="custom-control-input" id="{{ $tag->name }}" name="tags[]" value="{{ $tag->id }}">
 						<label class="custom-control-label" for="{{ $tag->name }}">{{ $tag->name }}</label>
 					</div>
 				@endforeach
-			</div> --}}
+			</div>
 
 
 			<button class="btn btn-primary" type="submit">INVIA</button>

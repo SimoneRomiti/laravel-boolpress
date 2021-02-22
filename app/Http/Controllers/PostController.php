@@ -18,7 +18,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        // dd($posts);
         return view('post', ['posts' => $posts]);
     }
 
@@ -30,15 +29,14 @@ class PostController extends Controller
     }
 
     public function create(){
-        // $tags = Tag::all();
-        return view('create_post');
+        $tags = Tag::all();
+        return view('create_post', ['tags' => $tags]);
     }
 
     public function store(Request $request){
 
         $request->validate($this->validation);
         $data = $request->all();
-
 
         $post = new Post();
         $post->fill($data);
@@ -51,8 +49,10 @@ class PostController extends Controller
         $infoPost->post_id = $post->id;
         $infoPost->save();
 
-        // $post->tags()->attach($data['tags']);
-
+        if(!empty($data['tags'])){
+            $post->tags()->attach($data['tags']);
+        }
+        
         return redirect()->route('post')
             ->with('message', 'il post dal titolo "'.$post->title.'" è stato creato correttamente');
 
@@ -60,7 +60,8 @@ class PostController extends Controller
 
     public function edit($slug){
         $post = Post::where('slug', $slug)->first();
-        return view('edit', ['post' => $post]);
+        $tags = Tag::all();
+        return view('edit', ['post' => $post, 'tags' => $tags]);
     }
 
     public function update(Request $request, $slug){
@@ -68,7 +69,11 @@ class PostController extends Controller
         $request->validate($this->validation);
         $data = $request->all();
         $post = Post::where('slug', $slug)->first();
+        if(empty($post)){
+            return redirect()->route('post')->with('messageError', "Il file che stai modificando non esiste più, una volta modificato un file non tornare indietro ma modificalo un'altra volta dall'indice");
+        }
         $post->fill($data);
+        $post->slug = Str::slug($data['title'], '-');
         // dd($post);
         $post->save();
 
@@ -76,8 +81,15 @@ class PostController extends Controller
         $infoPost->fill($data);
         $infoPost->save();
         // dd($infoPost);
+
+        if(empty($data['tags'])){
+            $post->tags()->detach();
+        }
+        else{
+            $post->tags()->sync($data['tags']);
+        }
         
-        return redirect()->route('detail', $slug)
+        return redirect()->route('detail', $post->slug)
             ->with('message', 'il post dal titolo "'.$post->title.'" è stato modificato correttamente');
     }
 

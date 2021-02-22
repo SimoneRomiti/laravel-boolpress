@@ -1,43 +1,53 @@
 @extends('layout.template')
 
 @section('main')
-	<div class="container bg-dark text-white py-2">
+
+	<div class="container">
+
 		@if (session('message'))
 			<div class="alert alert-success">
-					{{ session('message') }}
+				{{ session('message') }}
 			</div>
 		@endif
-		<ul>	
-			<li class="my-5 list-unstyled">
-				<h1 class="text-center">{{ $post->title }}</h1>
+
+		<div class="card" style="width: 40%; margin:auto; background-color: #e6f7ff">
+			<img src="{{ $post->img }}" class="card-img-top" alt="...">
+
+			<div class="card-body">
+				<h2 class="card-title">{{ $post->title }}</h2>
+
 				<div class="text-center">
-					<img src="{{ $post->img }}" alt="">
+					@foreach ($post->tags as $tag)
+						<span class="badge badge-info">{{ $tag->name }}</span>
+					@endforeach
 				</div>
+
+				<p class="card-text">{{ $post->text }}</p>
+				<p class="card-text text-center">- {{ $post->author }}</p>
+				<p class="card-text">Pubblicato il: <strong>{{ $post->published_at }}</strong></p>
+				<p class="card-text"><strong>Post Status</strong>
+						- {{ $post->info->post_status }}</p>
+				<p class="card-text"><strong>Comment Status</strong>
+						- {{ $post->info->comment_status }}</p>
 				
-				<p>{{ $post->text }}</p>
-				<p class="text-center">- {{ $post->author }}</p>
-				<p>Pubblicato il: <strong>{{ $post->published_at }}</strong></p>
-				<p>
-					<strong>Post Status</strong>
-					- {{ $post->info->post_status }}
-				</p>
-				<p>
-					<strong>Comment Status</strong>
-					- {{ $post->info->comment_status }}
-				</p>
+				<a href="{{ route('post') }}" class="btn btn-primary">Torna all'indice</a>
+		</div>
+	</div>
+	
 
-				<h3 class="text-center">Commenti</h3>
-				@foreach ($post->comments as $comment)
-					
-					<div class="my-1">- <strong>{{ $comment->author }}</strong></div>
-					<div>{{ $comment->text }}</div>
-					<div class="mt-2 mb-4">Commento pubblicato il: {{ $comment->published_at }}</div>
-					
-				@endforeach
+	
+	<div class="container bg-dark text-white mt-3" style="border-radius: 5px; padding:20px">
+		<h3 class="text-center">Commenti</h3>
+		@foreach ($post->comments as $comment)
+			
+			<div class="my-1">- <strong>{{ $comment->author }}</strong></div>
+			<div>{{ $comment->text }}</div>
+			<div class="mt-2 mb-4">Commento pubblicato il: {{ $comment->published_at }}</div>
+			
+		@endforeach
 
-			</li>
-		</ul>
-
+	
+		<h2>Inserisci un commento</h2>
 		<form action="{{ route('newComment', $post->id) }}" method="post">
 			@csrf
 			@method('POST')
@@ -54,7 +64,8 @@
 
 			<button class="btn btn-primary" type="submit">INVIA</button>
 		</form>
-		<a href="{{ route('post') }}">INDIETRO</a>
+		<a href="{{ route('post') }}" class="btn btn-primary mt-3">Torna all'indice</a>
 	</div>
+	
 @endsection
 	
