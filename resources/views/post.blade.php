@@ -32,13 +32,13 @@
 						<td>{{ $post->info->post_status }}</td>
 						<td>{{ $post->info->comment_status }}</td>
 						<td>{{ $post->published_at }}</td>
-						<td><a href="{{ route('detail', $post->slug) }}">Dettaglio</a></td>
-						<td><a href="{{ route('edit', $post->slug) }}">Modifica</a></td>
+						<td><a class="btn btn-primary" href="{{ route('detail', $post->slug) }}">Dettaglio</a></td>
+						<td><a class="btn btn-primary" href="{{ route('edit', $post->slug) }}">Modifica</a></td>
 						<td>
 							<form action="{{ route('delete', $post->id) }}" method="post" onsubmit="return confirm('Sei sicuro?')">
 								@csrf
 								@method('DELETE')
-								<button type="submit">Elimina</button>
+								<button class="btn btn-danger" type="submit">Elimina</button>
 							</form>
 						</td>
 					</tr>

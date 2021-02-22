@@ -37,7 +37,6 @@ class PostController extends Controller
 
         $request->validate($this->validation);
         $data = $request->all();
-
         $post = new Post();
         $post->fill($data);
         $post->slug = Str::slug($post->title, '-');
