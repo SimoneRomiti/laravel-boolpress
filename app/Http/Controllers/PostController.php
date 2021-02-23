@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\InfoPost;
 use App\Tag;
+use App\Image;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -30,17 +31,20 @@ class PostController extends Controller
 
     public function create(){
         $tags = Tag::all();
-        return view('create_post', ['tags' => $tags]);
+        $images = Image::all();
+        return view('create_post', ['tags' => $tags, 'images' => $images]);
     }
 
     public function store(Request $request){
 
         $request->validate($this->validation);
         $data = $request->all();
+        
         $post = new Post();
         $post->fill($data);
         $post->slug = Str::slug($post->title, '-');
         $post->published_at = date('Y-m-d H:i:s');
+        
         $post->save();
 
         $infoPost = new InfoPost();
@@ -51,6 +55,10 @@ class PostController extends Controller
         if(!empty($data['tags'])){
             $post->tags()->attach($data['tags']);
         }
+
+        if(!empty($data['images'])){
+            $post->images()->attach($data['images']);
+        }
         
         return redirect()->route('post')
             ->with('message', 'il post dal titolo "'.$post->title.'" è stato creato correttamente');
@@ -60,7 +68,8 @@ class PostController extends Controller
     public function edit($slug){
         $post = Post::where('slug', $slug)->first();
         $tags = Tag::all();
-        return view('edit', ['post' => $post, 'tags' => $tags]);
+        $images = Image::all();
+        return view('edit', ['post' => $post, 'tags' => $tags, 'images' => $images]);
     }
 
     public function update(Request $request, $slug){
@@ -86,6 +95,12 @@ class PostController extends Controller
         }
         else{
             $post->tags()->sync($data['tags']);
+        }
+
+        if(empty($data['images'])){
+            $post->images()->detach();
+        }else{
+            $post->images()->sync($data['images']);
         }
         
         return redirect()->route('detail', $post->slug)

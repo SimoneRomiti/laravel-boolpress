@@ -1,8 +1,31 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+// import slider slick JQuery
+@import "~slick-carousel/slick/slick";
+@import "~slick-carousel/slick/slick-theme";
+// import slider slick JQuery
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+/* Defines the width of the carousel and centers it on the page */
+.slick-carousel {
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* The width of each slide */
+.slick-slide {
+  width: 350px;
+}
+
+/* Color of the arrows */
+.slick-next::before, .slick-prev::before {
+  color: blue;
+}

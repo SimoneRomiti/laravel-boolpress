@@ -18,4 +18,10 @@ class Comment extends Model
         'published_at',
         'post_id'
     ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'published_at'
+    ];
 }

@@ -9,9 +9,10 @@
 						<li>{{ $error }}</li>
 					@endforeach
 				</ul>
-			</div>
-			
+			</div>	
 		@endif
+
+		<h2>Crea un nuovo Post</h2>
 		<form action="{{ route('store') }}" method="post">
 			@csrf
 			@method('Post')
@@ -54,8 +55,8 @@
 				</select>
 			</div>
 
-			<div class="form-group">
-				<label for="comment_status">TAGS</label>
+			<div class="form-group my-5">
+				<h5>TAGS</h5>
 				@foreach ($tags as $tag)
 					<div class="custom-control custom-switch">
 						<input type="checkbox" class="custom-control-input" id="{{ $tag->name }}" name="tags[]" value="{{ $tag->id }}">
@@ -64,8 +65,19 @@
 				@endforeach
 			</div>
 
+			<div class="form-group">
+				<h5>IMMAGINI</h5>
+				@foreach ($images as $image)
+					<div class="custom-control custom-switch my-2">
+						<input type="checkbox" class="custom-control-input" id="{{ $image->id }}" name="images[]" value="{{ $image->id }}">
+						<label class="custom-control-label" for="{{ $image->id }}">
+							<img src="{{ asset('images/'.$image->link) }}" alt="" style="width: 75px;">
+						</label>
+					</div>
+				@endforeach
+			</div>
 
-			<button class="btn btn-primary" type="submit">INVIA</button>
+			<button class="btn btn-primary mt-3" type="submit">INVIA</button>
 		</form>
 	</div>
 		

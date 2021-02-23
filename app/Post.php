@@ -12,8 +12,15 @@ class Post extends Model
         'img',
         'text',
         'author',
+        'published_at',
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
         'published_at'
     ];
+
     public function info(){
         return $this->hasOne('App\InfoPost');
     }
@@ -24,5 +31,9 @@ class Post extends Model
 
     public function tags(){
         return $this->belongsToMany('App\Tag');
+    }
+
+    public function images(){
+        return $this->belongsToMany('App\Image', 'post_image');
     }
 }

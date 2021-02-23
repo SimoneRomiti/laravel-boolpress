@@ -20,6 +20,7 @@
 				<th>AUTORE</th>
 				<th>POST STATUS</th>
 				<th>COMMENT STATUS</th>
+				<th>TAGS</th>
 				<th>PUBBLICATO IL</th>
 			</thead>
 
@@ -31,9 +32,16 @@
 						<td>{{ $post->author }}</td>
 						<td>{{ $post->info->post_status }}</td>
 						<td>{{ $post->info->comment_status }}</td>
-						<td>{{ $post->published_at }}</td>
-						<td><a class="btn btn-primary" href="{{ route('detail', $post->slug) }}">Dettaglio</a></td>
-						<td><a class="btn btn-primary" href="{{ route('edit', $post->slug) }}">Modifica</a></td>
+						<td>@if (count($post->tags) == 0)
+								no tags
+							@else
+								@foreach ($post->tags as $tag)
+									<span class="badge badge-info">{{ $tag->name }}</span>
+								@endforeach</td>
+							@endif
+						<td>{{ $post->published_at->format('d/m/Y H:i:s') }}</td>
+						<td><a class="btn btn-primary" href="{{ route('detail', $post->slug) }}"><i class="fas fa-search-plus"></i></a></td>
+						<td><a class="btn btn-primary" href="{{ route('edit', $post->slug) }}"><i class="fas fa-pencil-alt"></i></a></td>
 						<td>
 							<form action="{{ route('delete', $post->id) }}" method="post" onsubmit="return confirm('Sei sicuro?')">
 								@csrf
